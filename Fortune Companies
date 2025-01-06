@@ -66,4 +66,10 @@ FROM fortune_companies;
 
 #
 SELECT company_name, employees,
-CASE WHEN 
+CASE WHEN employees>= 1000000 THEN "Large Enterprise"
+WHEN employees>= 100000 THEN "Medium Enterprise"
+WHEN employees>= 10 THEN "Small Enterprise"
+ELSE "size"
+END AS size
+FROM fortune_companies
+ORDER BY employees desc;
