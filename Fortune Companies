@@ -73,3 +73,28 @@ ELSE "size"
 END AS size
 FROM fortune_companies
 ORDER BY employees desc;
+
+#
+SELECT company_name, SUM(paid_time_off_days) AS 'PTO'
+FROM fortune_companies
+GROUP BY company_name
+HAVING PTO >= 20
+ORDER BY PTO asc;
+
+#
+SELECT company_id, company_name, industry, healthcare_benefits
+FROM fortune_companies
+WHERE industry = 'Retail' AND healthcare_benefits = '1';
+
+#
+SELECT company_name, industry, maternity_leave_weeks
+FROM fortune_companies
+WHERE industry = 'Technology' OR industry = 'Energy' OR industry = 'Telecommunications'
+GROUP BY maternity_leave_weeks
+HAVING maternity_leave_weeks >= 9
+ORDER BY maternity_leave_weeks desc;
+
+SELECT industry, AVG(avg_employee_tenure) AS 'average_tenure'
+FROM fortune_companies
+GROUP BY industry
+ORDER BY avg_employee_tenure asc
