@@ -60,11 +60,11 @@ VALUES
 
 #For this project, I used SQL to query the fortune_companies database to get specific information about them.
 
-#
+#SELECT statement to gather the data table.
 SELECT *
 FROM fortune_companies;
 
-#
+#CASE Statement to gather the size of the companies and categorize them.
 SELECT company_name, employees,
 CASE WHEN employees>= 1000000 THEN "Large Enterprise"
 WHEN employees>= 100000 THEN "Medium Enterprise"
@@ -74,19 +74,19 @@ END AS size
 FROM fortune_companies
 ORDER BY employees desc;
 
-#
-SELECT company_name, SUM(paid_time_off_days) AS 'PTO'
+#SUM statement to see which industry has a most PTO.
+SELECT industry, SUM(paid_time_off_days) AS 'PTO'
 FROM fortune_companies
-GROUP BY company_name
+GROUP BY industry
 HAVING PTO >= 20
-ORDER BY PTO asc;
+ORDER BY SUM(paid_time_off_days) asc;
 
-#
+#AND statements used to determine which retail companies have healthcare benefits.
 SELECT company_id, company_name, industry, healthcare_benefits
 FROM fortune_companies
 WHERE industry = 'Retail' AND healthcare_benefits = '1';
 
-#
+#OR statements and GROUP BY statements used to gather which specific industrys have the most amount of maternity leave and which have the least.
 SELECT company_name, industry, maternity_leave_weeks
 FROM fortune_companies
 WHERE industry = 'Technology' OR industry = 'Energy' OR industry = 'Telecommunications'
@@ -94,7 +94,8 @@ GROUP BY maternity_leave_weeks
 HAVING maternity_leave_weeks >= 9
 ORDER BY maternity_leave_weeks desc;
 
-SELECT industry, AVG(avg_employee_tenure) AS 'average_tenure'
+#AVG statement used to gather the average tenure rounded down to one decimal in each industry.
+SELECT industry, ROUND(AVG(avg_employee_tenure),1) AS 'average_tenure'
 FROM fortune_companies
 GROUP BY industry
-ORDER BY avg_employee_tenure asc
+ORDER BY ROUND(AVG(avg_employee_tenure),1) desc;
