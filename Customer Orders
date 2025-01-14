@@ -55,3 +55,34 @@ ON FEB.orderid=cust.order_id
 WHERE Feb.Quantity>2
 AND length(orderid) = 6 
 AND orderid <> 'Order ID'
+
+#8 Which orders are between two specific dates and times?
+SELECT orderdate
+FROM BIT_DB.FebSales
+WHERE orderdate BETWEEN '02/13/19 00:00' AND '02/18/19 00:00';
+
+#9 Any orders on a certain date and time?
+SELECT location
+FROM BIT_DB.FebSales 
+WHERE orderdate = '02/18/19 01:35';
+
+#10 Is there an order on a specific date but any time during that date?
+SELECT SUM(quantity)
+FROM BIT_DB.FebSales 
+WHERE orderdate LIKE '02/18/19%';
+
+#11 Is there any products that have the word 'Batteries' in them?
+SELECT DISTINCT Product
+FROM BIT_DB.FebSales
+WHERE Product LIKE '%Batteries%';
+
+#12 Which products have a price that ends in a .99?
+SELECT DISTINCT Product, Price
+FROM BIT_DB.FebSales 
+WHERE Price LIKE '%.99';
+
+#13 What is the quantity of every product sold in Los Angeles? 
+SELECT Product, SUM(quantity)
+FROM BIT_DB.FebSales
+WHERE location like '%Los Angeles%'
+GROUP BY Product;
