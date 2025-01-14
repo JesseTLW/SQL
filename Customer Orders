@@ -119,3 +119,11 @@ FROM BIT_DB.JanSales
 GROUP BY product
 ORDER BY SUM(Quantity*price) desc
 LIMIT 1;
+
+#18 What was the average quantity of products purchased per account in February?
+SELECT SUM(quantity)/COUNT(customers.acctnum) AS 'Average Quantity Per Account'
+FROM BIT_DB.FebSales
+LEFT JOIN BIT_DB.customers
+ON FebSales.orderid=customers.order_id
+WHERE length(orderid) = 6 
+AND orderid <> 'Order ID';
