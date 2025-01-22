@@ -1,0 +1,43 @@
+#What are the top 5 most popular tracks, and who are their artists?
+
+SELECT track_name AS Track, artist_name AS Artist, popularity AS Popularity
+FROM BIT_DB.Spotifydata
+GROUP BY Track
+ORDER BY popularity desc
+LIMIT 5;
+
+#Which artist has the most tracks in the dataset?
+
+SELECT artist_name AS 'Artist', COUNT(artist_name) AS 'Number of Songs'
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY COUNT(artist_name) desc;
+
+#What is the average danceability, energy, and tempo of tracks for each time signature?
+
+SELECT time_signature AS 'Time Signature',
+ROUND(AVG(danceability),2) AS 'Avg Danceability',
+ROUND(AVG(energy),2) AS 'Avg Energy',
+ROUND(AVG(tempo),2) AS 'Avg Tempo'
+FROM BIT_DB.Spotifydata
+GROUP BY time_signature;
+
+#Which track has the highest acousticness, and what is its artist name?
+
+SELECT track_name AS 'Track',
+artist_name AS 'Artist',
+ROUND(acousticness,2) AS 'Highest Acoustics'
+FROM BIT_DB.Spotifydata
+GROUP BY track_name
+ORDER BY acousticness desc
+LIMIT 1;
+
+#What track has the highest instrumentalness in the dataset, and whats their popularity score?
+
+SELECT track_name AS 'Track',
+artist_name AS 'Artist',
+instrumentalness AS 'Instrumentals',
+popularity AS 'Popularity'
+FROM BIT_DB.Spotifydata
+WHERE instrumentalness = (SELECT MAX(instrumentalness) FROM BIT_DB.Spotifydata)
+ORDER BY popularity desc;
