@@ -1,0 +1,72 @@
+SELECT * FROM customers
+LIMIT 10;
+
+SELECT *
+FROM invoices;
+
+SELECT * 
+FROM employees;
+
+SELECT CustomerId,
+FirstName,
+LastName,
+Country
+FROM customers
+WHERE Country <> 'USA';
+
+SELECT FirstName,
+LastName,
+Country
+FROM customers
+WHERE Country = 'Brazil';
+
+SELECT customers.FirstName,
+customers.LastName,
+invoices.InvoiceId,
+invoices.InvoiceDate,
+invoices.BillingCountry
+FROM customers
+INNER JOIN invoices ON customers.CustomerId = invoices.CustomerId
+WHERE customers.Country = 'Brazil';
+
+SELECT FirstName,
+LastName,
+Title
+FROM employees
+WHERE Title = 'Sales Support Agent';
+
+SELECT DISTINCT BillingCountry
+FROM invoices
+ORDER BY BillingCountry asc;
+
+SELECT employees.FirstName,
+employees.LastName,
+invoices.InvoiceId
+FROM employees
+INNER JOIN customers
+ON customers.SupportRepId = employees.EmployeeId
+INNER JOIN invoices
+ON invoices.CustomerId = customers.CustomerId
+WHERE Title = 'Sales Support Agent';
+
+SELECT customers.FirstName AS 'CustomerFirstName',
+customers.LastName AS 'CustomerLastName',
+customers.Country,
+employees.FirstName AS 'EmployeeFirstName',
+employees.LastName AS 'EmployeeLastName',
+invoices.Total
+FROM customers
+INNER JOIN employees
+ON customers.SupportRepId = employees.EmployeeId
+INNER JOIN invoices
+ON customers.CustomerId = invoices.CustomerId
+ORDER BY invoices.Total desc;
+
+SELECT COUNT(InvoiceDate)
+FROM invoices
+WHERE InvoiceDate BETWEEN '2009-01-01 00:00:00' AND '2009-12-31 23:59:59';
+
+SELECT SUM(Total)
+FROM invoices
+WHERE InvoiceDate LIKE '%2009%';
+
